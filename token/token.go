@@ -18,8 +18,8 @@ const (
 	COMMA     = ","
 	SEMICOLON = ";"
 
-	LPARAN = "("
-	RPARAN = ")"
+	LPAREN = "("
+	RPAREN = ")"
 	LBRACE = "{"
 	RBRACE = "}"
 
@@ -31,4 +31,16 @@ const (
 type Token struct {
 	Type    TokenType
 	Literal string
+}
+
+var keywords = map[string]TokenType{
+	"fn":  FUNCTION,
+	"let": LET,
+}
+
+func LookupIdent(ident string) TokenType {
+	if tok, ok := keywords[ident]; ok {
+		return tok
+	}
+	return IDENT
 }
