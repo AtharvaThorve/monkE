@@ -50,9 +50,18 @@ This project is an implementation of an interpreter for the `monkE` programming 
 Once the REPL is running, you can start typing `monkE` code and see the results immediately. For example:
 
 ```sh
->> let x = 5;
->> x + 10;
-15
+This is monkE programming language!
+Feel free to type in Commands
+>> let x = 5
+{Type:LET Literal:let}
+{Type:IDENT Literal:x}
+{Type:= Literal:=}
+{Type:INT Literal:5}
+>> x + 10
+{Type:IDENT Literal:x}
+{Type:+ Literal:+}
+{Type:INT Literal:10}
+>>
 ```
 
 ## License
