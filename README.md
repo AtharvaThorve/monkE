@@ -52,18 +52,18 @@ Once the REPL is running, you can start typing `monkE` code and see the results 
 ```sh
 This is monkE programming language!
 Feel free to type in Commands
->> -5
--5
->> !true
-false
->> !-5
-false
->> !!-5
+>> 5 * 5 + 10
+35
+>> 3 + 4 * 5 == 3 * 1 + 4 * 5
 true
->> !!!-5
+>> 5 * 10 > 40 + 9
+true
+>> (10 + 2) * 30 == 300 + 20 * 3
+true
+>> (5 > 5 == true) != false                                                                                                                                                                  
 false
->> -true
-null
+>> 500 / 2 != 250
+false
 >>
 ```
 
