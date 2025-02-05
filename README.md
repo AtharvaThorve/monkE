@@ -52,15 +52,18 @@ Once the REPL is running, you can start typing `monkE` code and see the results 
 ```sh
 This is monkE programming language!
 Feel free to type in Commands
->> let x = 5
-{Type:LET Literal:let}
-{Type:IDENT Literal:x}
-{Type:= Literal:=}
-{Type:INT Literal:5}
->> x + 10
-{Type:IDENT Literal:x}
-{Type:+ Literal:+}
-{Type:INT Literal:10}
+>> -5
+-5
+>> !true
+false
+>> !-5
+false
+>> !!-5
+true
+>> !!!-5
+false
+>> -true
+null
 >>
 ```
 
