@@ -88,6 +88,13 @@ false
 false
 >> fn(x) { x == 10 }(10) 
 true
+>> let newAdder = fn(x) { fn(y) { x + y } };
+>> let addTwo = newAdder(2);
+>> addTwo(3);
+5
+>> let addThree = newAdder(3);
+>> addThree(10);
+13
 >>
 ```
 
