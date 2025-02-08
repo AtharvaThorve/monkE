@@ -78,6 +78,16 @@ false
 99
 >> d * c * a;
 245025
+>> let addTwo = fn(x) { x + 2; };
+>> addTwo(2)
+4
+>> let multiply = fn(x, y) { x * y; };
+>> multiply(50 / 2, 1 * 2);
+50
+>> fn(x) { x == 10 }(5)
+false
+>> fn(x) { x == 10 }(10) 
+true
 >>
 ```
 
