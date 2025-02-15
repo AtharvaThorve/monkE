@@ -49,7 +49,7 @@ This project is an implementation of an interpreter for the `monkE` programming 
 
 Once the REPL is running, you can start typing `monkE` code and see the results immediately. For example:
 
-```sh
+```monkE
 This is monkE programming language!
 Feel free to type in Commands
 >> 5 * 5 + 10
@@ -95,6 +95,13 @@ true
 >> let addThree = newAdder(3);
 >> addThree(10);
 13
+>> let makeGreeter = fn(greeting) { fn(name) { greeting + " " + name + "!" } };
+>> let hello = makeGreeter("Hello");
+>> hello("Atharva");
+Hello Atharva!
+>> let heythere = makeGreeter("Hey there");
+>> heythere("Atharva");
+Hey there Atharva!
 >>
 ```
 
