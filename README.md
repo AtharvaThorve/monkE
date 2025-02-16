@@ -6,6 +6,24 @@ This project is an implementation of an interpreter for the `monkE` programming 
 
 `monkE` is a simple, dynamically-typed programming language. This project is a **work in progress** and aims to implement the core features of the language as described in the book. The interpreter is written in Go.
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage](#usage)
+  - [Basic Arithmetic](#basic-arithmetic)
+  - [Conditional Statements](#conditional-statements)
+  - [Variable Declarations](#variable-declarations)
+  - [Functions](#functions)
+  - [String Manipulation](#string-manipulation)
+  - [Built-in Functions](#built-in-functions)
+- [License](#license)
+- [Acknowledgements](#acknowledgements)
+
 ## Features
 
 - **Lexer**: Tokenizes the input source code.
@@ -47,11 +65,11 @@ This project is an implementation of an interpreter for the `monkE` programming 
 
 ## Usage
 
-Once the REPL is running, you can start typing `monkE` code and see the results immediately. For example:
+Once the REPL is running, you can start typing `monkE` code and see the results immediately.
+
+### Basic Arithmetic
 
 ```monkE
-This is monkE programming language!
-Feel free to type in Commands
 >> 5 * 5 + 10
 35
 >> 3 + 4 * 5 == 3 * 1 + 4 * 5
@@ -64,10 +82,20 @@ true
 false
 >> 500 / 2 != 250
 false
+```
+
+### Conditional Statements
+
+```monkE
 >> if (5 * 5 + 10 > 34) { 99 } else { 100 }
 99
 >> if ((1000 / 2) + 250 * 2 == 1000) { 9999 }
 9999
+```
+
+### Variable Declarations
+
+```monkE
 >> let a = 5;
 >> let b = a > 3;
 >> let c = a * 99;
@@ -78,6 +106,11 @@ false
 99
 >> d * c * a;
 245025
+```
+
+### Functions
+
+```monkE
 >> let addTwo = fn(x) { x + 2; };
 >> addTwo(2)
 4
@@ -95,6 +128,11 @@ true
 >> let addThree = newAdder(3);
 >> addThree(10);
 13
+```
+
+### String Manipulation
+
+```monkE
 >> let makeGreeter = fn(greeting) { fn(name) { greeting + " " + name + "!" } };
 >> let hello = makeGreeter("Hello");
 >> hello("Atharva");
@@ -102,7 +140,18 @@ Hello Atharva!
 >> let heythere = makeGreeter("Hey there");
 >> heythere("Atharva");
 Hey there Atharva!
->>
+```
+
+### Built-in Functions
+
+```monkE
+>> len("1234")
+4
+>> len("Hello World!")
+12
+>> len("Woooooohooo!", "len works!!")
+ERROR: wrong number of arguments. got=2, want=1
+>> len(12345)
 ```
 
 ## License
