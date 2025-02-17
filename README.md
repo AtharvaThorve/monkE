@@ -162,6 +162,15 @@ ERROR: wrong number of arguments. got=2, want=1
 >> let double = fn(x) { x * 2 };
 >> [1, double(2), 3 * 3, 4 - 3]
 [1, 4, 9, 1]
+>> let a = [1, 2 * 2, 10 - 5, 8 / 2];
+>> a[0] 
+1
+>> a[1]
+4
+>> a[5-3]
+5
+>> a[99]
+null
 ```
 
 ## License
