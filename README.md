@@ -22,6 +22,7 @@ This project is an implementation of an interpreter for the `monkE` programming 
   - [String Manipulation](#string-manipulation)
   - [Built-in Functions](#built-in-functions)
   - [Array Literals](#array-literals)
+  - [Array Builtins](#array-builtins)
 - [License](#license)
 - [Acknowledgements](#acknowledgements)
 
@@ -170,6 +171,25 @@ ERROR: wrong number of arguments. got=2, want=1
 >> a[5-3]
 5
 >> a[99]
+null
+```
+
+### Array Builtins
+```monkE
+>> let a = [1, 2, 3, 4]
+>> first(a)
+1
+>> last(a)
+4
+>> rest(a)
+[2, 3, 4]
+>> rest(rest(a))
+[3, 4]
+>> rest(rest(rest(a)))
+[4]
+>> rest(rest(rest(rest(a))))
+[]
+>> rest(rest(rest(rest(rest(a)))))
 null
 ```
 
