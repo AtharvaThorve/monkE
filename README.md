@@ -21,6 +21,7 @@ This project is an implementation of an interpreter for the `monkE` programming 
   - [Functions](#functions)
   - [String Manipulation](#string-manipulation)
   - [Built-in Functions](#built-in-functions)
+  - [Array Literals](#array-literals)
 - [License](#license)
 - [Acknowledgements](#acknowledgements)
 
@@ -152,6 +153,15 @@ Hey there Atharva!
 >> len("Woooooohooo!", "len works!!")
 ERROR: wrong number of arguments. got=2, want=1
 >> len(12345)
+```
+
+### Array Literals
+```monkE
+>> [1,2,3,4]
+[1, 2, 3, 4]
+>> let double = fn(x) { x * 2 };
+>> [1, double(2), 3 * 3, 4 - 3]
+[1, 4, 9, 1]
 ```
 
 ## License
