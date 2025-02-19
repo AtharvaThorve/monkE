@@ -1,6 +1,11 @@
 # monkE Interpreter
 
-This project is an implementation of an interpreter for the `monkE` programming language, inspired by the book **"Writing an Interpreter in Go"** by Thorsten Ball. 
+This project is an implementation of an interpreter for the `monkE` programming language, inspired by the book **"Writing an Interpreter in Go"** by Thorsten Ball.
+```monkE
+>> print("Hello World from monkE!!");
+Hello World!!
+null
+```
 
 ## Overview
 
@@ -15,6 +20,7 @@ This project is an implementation of an interpreter for the `monkE` programming 
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
 - [Usage](#usage)
+  - [Print](#print)
   - [Basic Arithmetic](#basic-arithmetic)
   - [Conditional Statements](#conditional-statements)
   - [Variable Declarations](#variable-declarations)
@@ -69,6 +75,13 @@ This project is an implementation of an interpreter for the `monkE` programming 
 ## Usage
 
 Once the REPL is running, you can start typing `monkE` code and see the results immediately.
+
+### Print
+```monkE
+>> print("Hello World!!");
+Hello World!!
+null
+```
 
 ### Basic Arithmetic
 
