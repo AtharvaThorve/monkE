@@ -23,6 +23,7 @@ This project is an implementation of an interpreter for the `monkE` programming 
   - [Built-in Functions](#built-in-functions)
   - [Array Literals](#array-literals)
   - [Array Builtins](#array-builtins)
+  - [Hash Literals](#hash-literals)
 - [License](#license)
 - [Acknowledgements](#acknowledgements)
 
@@ -191,6 +192,12 @@ null
 []
 >> rest(rest(rest(rest(rest(a)))))
 null
+```
+
+### Hash Literals
+```monkE
+>> {"name": "Monkey", "age": 0, "type": "Language", "status": "awesome"}
+{name: Monkey, age: 0, type: Language, status: awesome}
 ```
 
 ## License
