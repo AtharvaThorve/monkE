@@ -9,7 +9,15 @@ null
 
 ## Overview
 
-`monkE` is a simple, dynamically-typed programming language. This project is a **work in progress** and aims to implement the core features of the language as described in the book. The interpreter is written in Go.
+`monkE` is a simple, dynamically-typed programming language. The interpreter is written in Go.
+
+The aim of the project was to learn core concepts of interpreters such as:
+- lexer
+- parser
+- abstract syntax tree
+- object system
+- evaluator
+- builtin functions
 
 ## Table of Contents
 
