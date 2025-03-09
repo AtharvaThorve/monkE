@@ -19,6 +19,8 @@ The aim of the project was to learn core concepts of interpreters such as:
 - evaluator
 - builtin functions
 
+**Note:** Work on adding a compiler and virtual machine is in progress.
+
 ## Table of Contents
 
 - [Overview](#overview)
