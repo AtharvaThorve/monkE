@@ -113,7 +113,7 @@ func TestBangOperator(t *testing.T) {
 func TestIfElseExpressions(t *testing.T) {
 	tests := []struct {
 		input    string
-		expected interface{}
+		expected any
 	}{
 		{"if (true) { 10 }", 10},
 		{"if (false) { 10 }", nil},
@@ -326,7 +326,7 @@ func TestClosures(t *testing.T) {
 func TestBuiltinFunctions(t *testing.T) {
 	tests := []struct {
 		input    string
-		expected interface{}
+		expected any
 	}{
 		{`len("")`, 0},
 		{`len("four")`, 4},
@@ -373,7 +373,7 @@ func TestArrayLiterals(t *testing.T) {
 func TestArrayIndexExpressions(t *testing.T) {
 	tests := []struct {
 		input    string
-		expected interface{}
+		expected any
 	}{
 		{
 			"[1, 2, 3][0]",
@@ -464,7 +464,7 @@ func TestHashLiterals(t *testing.T) {
 func TestHashIndexExpressions(t *testing.T) {
 	tests := []struct {
 		input    string
-		expected interface{}
+		expected any
 	}{
 		{
 			`{"foo": 5}["foo"]`,
