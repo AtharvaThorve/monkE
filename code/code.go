@@ -9,6 +9,7 @@ import (
 const (
 	OpConstant Opcode = iota
 	OpAdd
+	OpPop
 )
 
 type Opcode byte
@@ -21,6 +22,7 @@ type Definition struct {
 var definitions = map[Opcode]*Definition{
 	OpConstant: {"OpConstant", []int{2}},
 	OpAdd:      {"OpAdd", []int{}},
+	OpPop:      {"OpPop", []int{}},
 }
 
 type Instructions []byte
