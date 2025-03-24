@@ -7,6 +7,12 @@ import (
 	"monkE/object"
 )
 
+type SymbolScope string
+
+const (
+	GlobalScope SymbolScope = "GLOBAL"
+)
+
 type Bytecode struct {
 	Instructions code.Instructions
 	Constants    []object.Object
@@ -17,11 +23,40 @@ type EmittedInstruction struct {
 	Position int
 }
 
+type Symbol struct {
+	Name  string
+	Scope SymbolScope
+	Index int
+}
+
+type SymbolTable struct {
+	store          map[string]Symbol
+	numDefinitions int
+}
+
+func NewSymbolTable() *SymbolTable {
+	s := make(map[string]Symbol)
+	return &SymbolTable{store: s}
+}
+
+func (s *SymbolTable) Define(name string) Symbol {
+	symbol := &Symbol{Name: name, Scope: GlobalScope, Index: s.numDefinitions}
+	s.store[name] = *symbol
+	s.numDefinitions++
+	return *symbol
+}
+
+func (s *SymbolTable) Resolve(name string) (Symbol, bool) {
+	obj, ok := s.store[name]
+	return obj, ok
+}
+
 type Compiler struct {
 	instructions        code.Instructions
 	constants           []object.Object
 	lastInstruction     EmittedInstruction
 	previousInstruction EmittedInstruction
+	symbolTable         *SymbolTable
 }
 
 func New() *Compiler {
@@ -30,6 +65,7 @@ func New() *Compiler {
 		constants:           []object.Object{},
 		lastInstruction:     EmittedInstruction{},
 		previousInstruction: EmittedInstruction{},
+		symbolTable:         NewSymbolTable(),
 	}
 }
 
@@ -49,6 +85,29 @@ func (c *Compiler) Compile(node ast.Node) error {
 			return err
 		}
 		c.emit(code.OpPop)
+
+	case *ast.BlockStatement:
+		for _, s := range node.Statements {
+			err := c.Compile(s)
+			if err != nil {
+				return err
+			}
+		}
+
+	case *ast.LetStatement:
+		err := c.Compile(node.Value)
+		if err != nil {
+			return err
+		}
+		symbol := c.symbolTable.Define(node.Name.Value)
+		c.emit(code.OpSetGlobal, symbol.Index)
+
+	case *ast.Identifier:
+		symbol, ok := c.symbolTable.Resolve(node.Value)
+		if !ok {
+			return fmt.Errorf("undefined variable %s", node.Value)
+		}
+		c.emit(code.OpGetGlobal, symbol.Index)
 
 	case *ast.InfixExpression:
 		if node.Operator == "<" {
@@ -146,14 +205,6 @@ func (c *Compiler) Compile(node ast.Node) error {
 
 		afterConsequencePos = len(c.instructions)
 		c.changeOperand(jumpPos, afterConsequencePos)
-
-	case *ast.BlockStatement:
-		for _, s := range node.Statements {
-			err := c.Compile(s)
-			if err != nil {
-				return err
-			}
-		}
 
 	case *ast.IntegerLiteral:
 		integer := &object.Integer{Value: node.Value}
