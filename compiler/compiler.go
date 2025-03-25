@@ -224,6 +224,10 @@ func (c *Compiler) Compile(node ast.Node) error {
 		} else {
 			c.emit(code.OpFalse)
 		}
+
+	case *ast.StringLiteral:
+		stringLiteral := &object.String{Value: node.Value}
+		c.emit(code.OpConstant, c.addConstant(stringLiteral))
 	}
 
 	return nil
