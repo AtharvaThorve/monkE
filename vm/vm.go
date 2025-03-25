@@ -8,7 +8,7 @@ import (
 )
 
 const StackSize = 2048
-const GlobalSize = 65536
+const GlobalsSize = 65536
 
 var True = &object.Boolean{Value: true}
 var False = &object.Boolean{Value: false}
@@ -32,8 +32,15 @@ func New(bytecode *compiler.Bytecode) *VM {
 		stack: make([]object.Object, StackSize),
 		sp:    0,
 
-		globals: make([]object.Object, GlobalSize),
+		globals: make([]object.Object, GlobalsSize),
 	}
+}
+
+func NewWithGlobalStore(bytecode *compiler.Bytecode, s []object.Object) *VM {
+	vm := New(bytecode)
+	vm.globals = s
+
+	return vm
 }
 
 func (vm *VM) Run() error {
