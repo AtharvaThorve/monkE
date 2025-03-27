@@ -228,6 +228,15 @@ func (c *Compiler) Compile(node ast.Node) error {
 	case *ast.StringLiteral:
 		stringLiteral := &object.String{Value: node.Value}
 		c.emit(code.OpConstant, c.addConstant(stringLiteral))
+
+	case *ast.ArrayLiteral:
+		for _, ele := range node.Elements {
+			err := c.Compile(ele)
+			if err != nil {
+				return err
+			}
+		}
+		c.emit(code.OpArray, len(node.Elements))
 	}
 
 	return nil
