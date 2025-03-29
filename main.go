@@ -14,5 +14,6 @@ func main() {
 	}
 	fmt.Printf("Hello %s! This is monkE programming language!\n", user.Username)
 	fmt.Printf("Feel free to type in Commands\n")
+	fmt.Printf("Type /exit to exit from the repl\n")
 	repl.Start(os.Stdin, os.Stdout)
 }
