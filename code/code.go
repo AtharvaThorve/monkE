@@ -28,8 +28,11 @@ const (
 	OpArray
 	OpHash
 	OpIndex
+	// to tell the VM to start executing the *object.CompiledFunction sitting on top of the stack.
 	OpCall
+	// to tell the VM to return the value on top of the stack to the calling context and to resume execution there.
 	OpReturnValue
+	// which is similar to code.OpReturnValue, except that there is no explicit value to return but an implicit vm.Null.
 	OpReturn
 )
 
