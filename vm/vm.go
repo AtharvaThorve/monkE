@@ -183,6 +183,33 @@ func (vm *VM) Run() error {
 				return err
 			}
 
+		case code.OpCall:
+			fn, ok := vm.stack[vm.sp-1].(*object.CompiledFunction)
+			if !ok {
+				return fmt.Errorf("calling non-function")
+			}
+			frame := NewFrame(fn)
+			vm.pushFrame(frame)
+
+		case code.OpReturnValue:
+			returnValue := vm.pop() // Store the return value of the function
+
+			vm.popFrame() // Give the control back to the previous frame
+			vm.pop()      // Remove the just executed function from the stack
+
+			err := vm.push(returnValue) // push the return value of the function back on top of the stack
+			if err != nil {
+				return err
+			}
+
+		case code.OpReturn:
+			vm.popFrame()
+			vm.pop()
+
+			err := vm.push(Null)
+			if err != nil {
+				return err
+			}
 		}
 	}
 
