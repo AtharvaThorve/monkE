@@ -8,12 +8,6 @@ import (
 	"sort"
 )
 
-type SymbolScope string
-
-const (
-	GlobalScope SymbolScope = "GLOBAL"
-)
-
 type Bytecode struct {
 	Instructions code.Instructions
 	Constants    []object.Object
@@ -22,34 +16,6 @@ type Bytecode struct {
 type EmittedInstruction struct {
 	Opcode   code.Opcode
 	Position int
-}
-
-type Symbol struct {
-	Name  string
-	Scope SymbolScope
-	Index int
-}
-
-type SymbolTable struct {
-	store          map[string]Symbol
-	numDefinitions int
-}
-
-func NewSymbolTable() *SymbolTable {
-	s := make(map[string]Symbol)
-	return &SymbolTable{store: s}
-}
-
-func (s *SymbolTable) Define(name string) Symbol {
-	symbol := &Symbol{Name: name, Scope: GlobalScope, Index: s.numDefinitions}
-	s.store[name] = *symbol
-	s.numDefinitions++
-	return *symbol
-}
-
-func (s *SymbolTable) Resolve(name string) (Symbol, bool) {
-	obj, ok := s.store[name]
-	return obj, ok
 }
 
 type CompilationScope struct {
@@ -119,15 +85,26 @@ func (c *Compiler) Compile(node ast.Node) error {
 		if err != nil {
 			return err
 		}
+
 		symbol := c.symbolTable.Define(node.Name.Value)
-		c.emit(code.OpSetGlobal, symbol.Index)
+
+		if symbol.Scope == GlobalScope {
+			c.emit(code.OpSetGlobal, symbol.Index)
+		} else {
+			c.emit(code.OpSetLocal, symbol.Index)
+		}
 
 	case *ast.Identifier:
 		symbol, ok := c.symbolTable.Resolve(node.Value)
 		if !ok {
 			return fmt.Errorf("undefined variable %s", node.Value)
 		}
-		c.emit(code.OpGetGlobal, symbol.Index)
+
+		if symbol.Scope == GlobalScope {
+			c.emit(code.OpGetGlobal, symbol.Index)
+		} else {
+			c.emit(code.OpGetLocal, symbol.Index)
+		}
 
 	case *ast.InfixExpression:
 		if node.Operator == "<" {
@@ -420,6 +397,8 @@ func (c *Compiler) enterScope() {
 
 	c.scopes = append(c.scopes, scope)
 	c.scopeIndex++
+
+	c.symbolTable = NewEnclosedSymbolTable(c.symbolTable)
 }
 
 func (c *Compiler) leaveScope() code.Instructions {
@@ -427,6 +406,8 @@ func (c *Compiler) leaveScope() code.Instructions {
 
 	c.scopes = c.scopes[:len(c.scopes)-1]
 	c.scopeIndex--
+
+	c.symbolTable = c.symbolTable.Outer
 
 	return instructions
 }
