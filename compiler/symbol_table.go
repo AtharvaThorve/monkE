@@ -3,8 +3,9 @@ package compiler
 type SymbolScope string
 
 const (
-	GlobalScope SymbolScope = "GLOBAL"
-	LocalScope  SymbolScope = "LOCAL"
+	GlobalScope  SymbolScope = "GLOBAL"
+	LocalScope   SymbolScope = "LOCAL"
+	BuiltinScope SymbolScope = "BUILTIN"
 )
 
 type Symbol struct {
@@ -50,4 +51,11 @@ func (s *SymbolTable) Resolve(name string) (Symbol, bool) {
 		return s.Outer.Resolve(name)
 	}
 	return obj, ok
+}
+
+func (s *SymbolTable) DefineBuiltin(index int, name string) Symbol {
+	symbol := &Symbol{Name: name, Index: index, Scope: BuiltinScope}
+	s.store[name] = *symbol
+
+	return *symbol
 }
