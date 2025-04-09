@@ -39,6 +39,7 @@ const (
 	OpGetBuiltin
 	OpClosure
 	OpGetFree
+	OpCurrentClosure
 )
 
 type Opcode byte
@@ -85,8 +86,9 @@ var definitions = map[Opcode]*Definition{
 	// The second operand, one byte wide, specifies how many free variables sit on the stack and need
 	// to be transferred to the about-to-be-created closure. Why one byte? Well, 256 free variables
 	// should be plenty.
-	OpClosure: {"OpClosure", []int{2, 1}},
-	OpGetFree: {"OpGetFree", []int{1}},
+	OpClosure:        {"OpClosure", []int{2, 1}},
+	OpGetFree:        {"OpGetFree", []int{1}},
+	OpCurrentClosure: {"OpCurrentClosure", []int{}},
 }
 
 type Instructions []byte
