@@ -38,6 +38,7 @@ const (
 	OpSetLocal
 	OpGetBuiltin
 	OpClosure
+	OpGetFree
 )
 
 type Opcode byte
@@ -85,6 +86,7 @@ var definitions = map[Opcode]*Definition{
 	// to be transferred to the about-to-be-created closure. Why one byte? Well, 256 free variables
 	// should be plenty.
 	OpClosure: {"OpClosure", []int{2, 1}},
+	OpGetFree: {"OpGetFree", []int{1}},
 }
 
 type Instructions []byte
