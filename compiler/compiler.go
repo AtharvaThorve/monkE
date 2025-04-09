@@ -296,7 +296,9 @@ func (c *Compiler) Compile(node ast.Node) error {
 			NumLocals:     numLocals,
 			NumParameters: len(node.Parameters),
 		}
-		c.emit(code.OpConstant, c.addConstant(compiledFn))
+
+		fnIndex := c.addConstant(compiledFn)
+		c.emit(code.OpClosure, fnIndex, 0)
 
 	case *ast.CallExpression:
 		err := c.Compile(node.Function)
