@@ -27,7 +27,14 @@ const (
 
 	ARRAY_OBJ = "ARRAY"
 	HASH_OBJ  = "HASH"
+
+	CLOSURE_OBJ = "CLOSURE"
 )
+
+type Object interface {
+	Type() ObjectType
+	Inspect() string
+}
 
 type HashKey struct {
 	Type  ObjectType
@@ -36,10 +43,6 @@ type HashKey struct {
 
 type Hashable interface {
 	HashKey() HashKey
-}
-type Object interface {
-	Type() ObjectType
-	Inspect() string
 }
 
 type Integer struct {
@@ -190,4 +193,14 @@ func (h *Hash) Inspect() string {
 	out.WriteString("}")
 
 	return out.String()
+}
+
+type Closure struct {
+	Fn   *CompiledFunction
+	Free []Object
+}
+
+func (c *Closure) Type() ObjectType { return CLOSURE_OBJ }
+func (c *Closure) Inspect() string {
+	return fmt.Sprintf("Closure[%p]", c)
 }

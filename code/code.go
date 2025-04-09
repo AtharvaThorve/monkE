@@ -37,6 +37,7 @@ const (
 	OpGetLocal
 	OpSetLocal
 	OpGetBuiltin
+	OpClosure
 )
 
 type Opcode byte
@@ -74,6 +75,16 @@ var definitions = map[Opcode]*Definition{
 	OpGetLocal:      {"OpGetLocal", []int{1}},
 	OpSetLocal:      {"OpSetLocal", []int{1}},
 	OpGetBuiltin:    {"OpGetBuiltin", []int{1}},
+	// The first operand, two bytes wide, is the constant index. It specifies where in the constant pool
+	// we can find the *object.CompiledFunction that’s to be converted into a closure. It’s two bytes
+	// wide, because the operand of OpConstant is also two bytes wide. By keeping this consistent we
+	// ensure that we never run into the case where we can load a function from the constant pool
+	// and put it on the stack, but can’t convert it into a closure, because it’s index is too high.
+
+	// The second operand, one byte wide, specifies how many free variables sit on the stack and need
+	// to be transferred to the about-to-be-created closure. Why one byte? Well, 256 free variables
+	// should be plenty.
+	OpClosure: {"OpClosure", []int{2, 1}},
 }
 
 type Instructions []byte
@@ -112,6 +123,8 @@ func (ins Instructions) fmtInstruction(def *Definition, operands []int) string {
 		return def.Name
 	case 1:
 		return fmt.Sprintf("%s %d", def.Name, operands[0])
+	case 2:
+		return fmt.Sprintf("%s %d %d", def.Name, operands[0], operands[1])
 	}
 
 	return fmt.Sprintf("ERROR: unhandled operandCount for %s\n", def.Name)
